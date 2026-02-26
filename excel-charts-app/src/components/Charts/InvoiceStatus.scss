@@ -1,0 +1,43 @@
+.chart-container {
+    background-color: #ffffff;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 24px;
+
+    h3 {
+        margin: 0 0 20px 0;
+        font-size: 18px;
+        font-weight: 600;
+        color: #1f2937;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: #9ca3af;
+        font-size: 14px;
+    }
+
+    .custom-tooltip {
+        background-color: #ffffff;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+        .label {
+            margin: 0;
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 13px;
+        }
+
+        .value {
+            margin: 4px 0 0 0;
+            color: #059669;
+            font-weight: 600;
+            font-size: 13px;
+        }
+    }
+}

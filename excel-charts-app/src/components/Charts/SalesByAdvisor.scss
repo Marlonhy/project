@@ -1,0 +1,87 @@
+.chart-container {
+    background-color: #ffffff;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 24px;
+
+    h3 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: #1f2937;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: #9ca3af;
+        font-size: 14px;
+    }
+
+    .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        gap: 20px;
+
+        h3 {
+            margin: 0;
+            flex: 1;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 8px;
+
+            button {
+                padding: 8px 12px;
+                border: 1px solid #e5e7eb;
+                background-color: #ffffff;
+                color: #6b7280;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 12px;
+                font-weight: 500;
+                transition: all 0.2s ease;
+
+                &:hover:not(:disabled) {
+                    border-color: #d1d5db;
+                    background-color: #f9fafb;
+                }
+
+                &.active {
+                    background-color: #1f2937;
+                    color: #ffffff;
+                    border-color: #1f2937;
+                }
+
+                &:disabled {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                }
+            }
+        }
+    }
+}
+
+.custom-tooltip {
+    background-color: rgba(31, 41, 55, 0.95);
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    .label {
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 600;
+        margin: 0 0 4px 0;
+    }
+
+    .value {
+        color: #e5e7eb;
+        font-size: 12px;
+        margin: 0;
+    }
+}

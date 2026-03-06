@@ -4,16 +4,33 @@ import {
     Bar,
     XAxis,
     YAxis,
-    CartesianGrid,
     Tooltip,
     ResponsiveContainer,
     Cell
 } from "recharts";
 import "./SalesByAdvisor.scss";
 
+/**
+ * Componente SalesByAdvisor
+ * Gráfico de barras horizontal que muestra ventas y tickets agrupados por asesor
+ * 
+ * Características:
+ * - Vista dual: puede mostrar Ventas o Cantidad de Tickets
+ * - Barras horizontales para facilitar lectura de nombres largos
+ * - Etiquetas de valores al final de cada barra
+ * - Toggle para cambiar entre dos modos de visualización
+ * - Tooltip personalizado
+ * - Margen derecho amplio para mostrar etiquetas
+ * 
+ * Props:
+ * @param {Array} data - Array de objetos con ventas por asesor
+ * @param {Array} ticketsData - Array de objetos con tickets por asesor
+ */
 function SalesByAdvisor({ data, ticketsData }) {
+    // Estado para controlar qué datos mostrar: "ventas" o "cantidad"
     const [viewMode, setViewMode] = useState("ventas");
 
+    // Validación: mostrar mensaje si no hay datos
     if (!data || data.length === 0) {
         return (
             <div className="chart-container">
@@ -23,13 +40,20 @@ function SalesByAdvisor({ data, ticketsData }) {
         );
     }
 
+    // Paleta de colores para las barras
     const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#8b5cf6", "#ef4444", "#06b6d4"];
 
+    /**
+     * Componente Tooltip Personalizado
+     * Muestra información contexto según el modo (ventas o tickets)
+     */
     const CustomTooltip = ({ active, payload }) => {
         if (active && payload && payload[0]) {
             return (
                 <div className="custom-tooltip">
+                    {/* Nombre del asesor */}
                     <p className="label">{payload[0].payload.name}</p>
+                    {/* Valor con formato según el modo de visualización */}
                     <p className="value">
                         {viewMode === "ventas"
                             ? `$${payload[0].value.toLocaleString()}`
@@ -42,26 +66,32 @@ function SalesByAdvisor({ data, ticketsData }) {
         return null;
     };
 
+    /**
+     * Renderiza las etiquetas al final de cada barra (lado derecho)
+     * Formatea el valor según el modo actual
+     */
     const renderCustomizedLabel = (props) => {
         const { x, y, width, height, value } = props;
+        // Formatea el valor: dinero para ventas, número para tickets
         const formattedValue = viewMode === "ventas" 
             ? `$${value.toLocaleString()}`
             : `${value}`;
         return (
             <text
-                x={x + width + 8}
-                y={y + height / 2}
-                fill="#1f2937"
-                textAnchor="start"
-                dominantBaseline="middle"
-                fontSize={11}
-                fontWeight="600"
+                x={x + width + 8}              // Posición hacia la derecha de la barra
+                y={y + height / 2}             // Centrado verticalmente en la barra
+                fill="#1f2937"                  // Color gris oscuro
+                textAnchor="start"              // Alineación desde la izquierda
+                dominantBaseline="middle"       // Alineación vertical
+                fontSize={11}                   // Tamaño de fuente
+                fontWeight="600"                // Semibold
             >
                 {formattedValue}
             </text>
         );
     };
 
+    // Selecciona qué dataset mostrar según el modo
     const displayData = viewMode === "ventas" ? data : (ticketsData || data);
 
     return (
@@ -88,9 +118,9 @@ function SalesByAdvisor({ data, ticketsData }) {
                 <BarChart
                     data={displayData}
                     layout="vertical"
-                    margin={{ top: 20, right: 50, left: 100, bottom: 20 }}
+                    margin={{ top: 20, right: 150, left: 100, bottom: 20 }}
+                    clipPath={false}
                 >
-                    <CartesianGrid strokeDasharray="3 3" />
                     <XAxis type="number" hide={true} />
                     <YAxis 
                         type="category" 

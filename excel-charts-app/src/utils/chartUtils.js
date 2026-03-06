@@ -1,5 +1,9 @@
 /**
- * Calcula ventas totales agrupadas por GDS
+ * Función calculateSalesByGDS
+ * Calcula las ventas totales agrupadas por GDS (Sistema de Distribución Global)
+ * Agrupa todos los registros por su campo 'gds' y suma sus totales
+ * @param {Array} data - Dataset filtrado
+ * @returns {Array} Array ordenado descendente [{ name: "GDS1", value: 5000 }, ...]
  */
 export function calculateSalesByGDS(data) {
     const sales = {};
@@ -19,7 +23,11 @@ export function calculateSalesByGDS(data) {
 }
 
 /**
- * Calcula cantidad de TKTs agrupadas por GDS
+ * Función calculateTicketsByGDS
+ * Calcula la cantidad de tickets agrupados por GDS
+ * Cuenta cuántos registros hay en cada GDS
+ * @param {Array} data - Dataset filtrado
+ * @returns {Array} Array ordenado descendente [{ name: "GDS1", value: 10 }, ...]
  */
 export function calculateTicketsByGDS(data) {
     const ticketCount = {};
@@ -39,7 +47,11 @@ export function calculateTicketsByGDS(data) {
 }
 
 /**
- * Calcula facturas contando TKTs por estado
+ * Función calculateInvoicesByStatus
+ * Cuenta la cantidad de registros por estado de facturación
+ * Agrupa registros en "FACTURADO" y "NO FACTURADO"
+ * @param {Array} data - Dataset filtrado
+ * @returns {Array} [{ name: "FACTURADO", value: 50 }, { name: "NO FACTURADO", value: 30 }]
  */
 export function calculateInvoicesByStatus(data) {
     const statusCount = {
@@ -62,7 +74,11 @@ export function calculateInvoicesByStatus(data) {
 }
 
 /**
- * Calcula ventas totales agrupadas por aerolínea
+ * Función calculateSalesByAirline
+ * Calcula las ventas totales agrupadas por aerolínea
+ * Suma todos los totales para cada aerolínea
+ * @param {Array} data - Dataset filtrado
+ * @returns {Array} Array ordenado descendente [{ name: "LATAM", value: 10000 }, ...]
  */
 export function calculateSalesByAirline(data) {
     const sales = {};
@@ -82,7 +98,11 @@ export function calculateSalesByAirline(data) {
 }
 
 /**
- * Calcula cantidad de TKTs agrupadas por aerolínea
+ * Función calculateTicketsByAirline
+ * Calcula la cantidad de tickets agrupados por aerolínea
+ * Cuenta cuántos registros hay en cada aerolínea
+ * @param {Array} data - Dataset filtrado
+ * @returns {Array} Array ordenado descendente [{ name: "LATAM", value: 50 }, ...]
  */
 export function calculateTicketsByAirline(data) {
     const ticketCount = {};
@@ -102,7 +122,11 @@ export function calculateTicketsByAirline(data) {
 }
 
 /**
- * Obtiene datos pendientes por facturar
+ * Función getPendingInvoices
+ * Filtra y retorna todos los registros con estado "NO FACTURADO"
+ * Los ordena por fecha de emisión (más recientes primero)
+ * @param {Array} data - Dataset filtrado
+ * @returns {Array} Registros no facturados ordenados por fecha descendente
  */
 export function getPendingInvoices(data) {
     return data
@@ -111,14 +135,22 @@ export function getPendingInvoices(data) {
 }
 
 /**
- * Calcula el total de ventas
+ * Función calculateTotalSales
+ * Suma todos los valores del campo 'total' del dataset
+ * Retorna la suma total de ventas en dinero
+ * @param {Array} data - Dataset filtrado
+ * @returns {number} Total de ventas en moneda
  */
 export function calculateTotalSales(data) {
     return data.reduce((sum, row) => sum + (row.total || 0), 0);
 }
 
 /**
- * Calcula total de facturado vs no facturado en valores
+ * Función calculateSalesByInvoiceStatus
+ * Calcula el total de ventas separado por estado de facturación
+ * Suma los totales para registros "FACTURADO" y "NO FACTURADO"
+ * @param {Array} data - Dataset filtrado
+ * @returns {Array} [{ name: "Facturado", value: 8000 }, { name: "No Facturado", value: 2000 }]
  */
 export function calculateSalesByInvoiceStatus(data) {
     let facturado = 0;
@@ -147,7 +179,11 @@ export function calculateSalesByInvoiceStatus(data) {
 }
 
 /**
- * Calcula ventas totales agrupadas por Asesor
+ * Función calculateSalesByAdvisor
+ * Calcula las ventas totales agrupadas por asesor
+ * Suma todos los totales para cada vendedor
+ * @param {Array} data - Dataset filtrado
+ * @returns {Array} Array ordenado descendente [{ name: "Juan", value: 5000 }, ...]
  */
 export function calculateSalesByAdvisor(data) {
     const sales = {};
@@ -167,7 +203,11 @@ export function calculateSalesByAdvisor(data) {
 }
 
 /**
- * Calcula cantidad de TKTs agrupadas por Asesor
+ * Función calculateTicketsByAdvisor
+ * Calcula la cantidad de tickets agrupados por asesor
+ * Cuenta cuántos registros ha vendido cada asesor
+ * @param {Array} data - Dataset filtrado
+ * @returns {Array} Array ordenado descendente [{ name: "Juan", value: 25 }, ...]
  */
 export function calculateTicketsByAdvisor(data) {
     const ticketCount = {};

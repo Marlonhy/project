@@ -1,6 +1,21 @@
 import "./PendingInvoices.scss";
 
+/**
+ * Componente PendingInvoices
+ * Tabla que muestra todos los registros pendientes por facturar
+ * 
+ * Características:
+ * - Tabla con scroll horizontal si es necesario
+ * - Columnas: MES, TKT, AEROLÍNEA, FECHA EMISIÓN, TOTAL, ASESOR, GDS, PASAJERO
+ * - Formatea fechas en formato español
+ * - Formatea valores monetarios con separadores de miles
+ * - Muestra el total de registros pendientes
+ * 
+ * Props:
+ * @param {Array} data - Array de registros con estado "NO FACTURADO"
+ */
 function PendingInvoices({ data }) {
+    // Validación: mostrar mensaje si no hay datos pendientes
     if (!data || data.length === 0) {
         return (
             <div className="pending-invoices">
@@ -12,11 +27,21 @@ function PendingInvoices({ data }) {
         );
     }
 
+    /**
+     * Convierte una fecha a formato español (DD/MM/YYYY)
+     * @param {Date} date - Fecha a convertir
+     * @returns {string} Fecha formateada o "N/A" si es nula
+     */
     const formatDate = (date) => {
         if (!date) return "N/A";
         return new Date(date).toLocaleDateString("es-ES");
     };
 
+    /**
+     * Formatea un valor numérico a moneda con separadores de miles
+     * @param {number} value - Valor a formatear
+     * @returns {string} Valor formateado como dinero
+     */
     const formatCurrency = (value) => {
         return `$${parseFloat(value || 0).toLocaleString("es-ES", {
             minimumFractionDigits: 2,

@@ -4,13 +4,27 @@ import {
     Bar,
     XAxis,
     YAxis,
-    CartesianGrid,
     Tooltip,
     ResponsiveContainer,
     Cell
 } from "recharts";
 import "./SalesByGDS.scss";
 
+/**
+ * Componente SalesByGDS
+ * Gráfico de barras horizontal que muestra ventas y tickets agrupados por GDS (Sistema de Distribución Global)
+ * 
+ * Características:
+ * - Vista dual: puede mostrar Ventas o Cantidad de Tickets
+ * - Barras horizontales para facilitar lectura de nombres
+ * - Etiquetas de valores al final de cada barra
+ * - Toggle para cambiar entre dos modos de visualización
+ * - Tooltip personalizado
+ * 
+ * Props:
+ * @param {Array} data - Array de objetos con ventas por GDS
+ * @param {Array} ticketsData - Array de objetos con tickets por GDS
+ */
 function SalesByGDS({ data, ticketsData }) {
     const [viewMode, setViewMode] = useState("ventas");
 
@@ -88,9 +102,9 @@ function SalesByGDS({ data, ticketsData }) {
                 <BarChart
                     data={displayData}
                     layout="vertical"
-                    margin={{ top: 20, right: 50, left: 120, bottom: 20 }}
+                    margin={{ top: 20, right: 150, left: 120, bottom: 20 }}
+                    clipPath={false}
                 >
-                    <CartesianGrid strokeDasharray="3 3" />
                     <XAxis type="number" hide={true} />
                     <YAxis 
                         type="category" 

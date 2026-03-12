@@ -33,7 +33,7 @@
             border-radius: 8px;
             border: 1px solid #d1d5db;
             background-color: #ffffff;
-            color: #1f2937;
+            color: white;
             font-size: 13px;
             font-weight: 500;
             cursor: pointer;
@@ -57,14 +57,14 @@
 
             .count {
                 font-size: 11px;
-                color: #3b82f6;
+                color: white;
                 font-weight: 600;
             }
 
             .arrow {
                 font-size: 10px;
                 transition: transform 0.2s ease;
-                color: #1f2937;
+                color: white;
                 flex-shrink: 0;
 
                 &.open {

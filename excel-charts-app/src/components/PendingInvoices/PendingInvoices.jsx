@@ -1,4 +1,5 @@
 import "./PendingInvoices.scss";
+import * as XLSX from "xlsx";
 
 /**
  * Componente PendingInvoices
@@ -10,6 +11,7 @@ import "./PendingInvoices.scss";
  * - Formatea fechas en formato español
  * - Formatea valores monetarios con separadores de miles
  * - Muestra el total de registros pendientes
+ * - Permite exportar datos a Excel
  * 
  * Props:
  * @param {Array} data - Array de registros con estado "NO FACTURADO"
@@ -19,7 +21,7 @@ function PendingInvoices({ data }) {
     if (!data || data.length === 0) {
         return (
             <div className="pending-invoices">
-                <h3>Datos Pendientes por Facturar</h3>
+                <h3>Tkts Pendientes por Facturar</h3>
                 <div className="empty-state">
                     <p>No hay datos pendientes por facturar</p>
                 </div>
@@ -49,9 +51,63 @@ function PendingInvoices({ data }) {
         })}`;
     };
 
+    /**
+     * Exporta los datos pendientes a un archivo Excel
+     */
+    const exportToExcel = () => {
+        if (!data || data.length === 0) {
+            alert("No hay datos para exportar");
+            return;
+        }
+
+        // Preparar los datos con formato
+        const exportData = data.map(row => ({
+            "MES": row.mes,
+            "TKT": row.tkt,
+            "AEROLÍNEA": row.aerolinea,
+            "FECHA EMISIÓN": formatDate(row.fechaEmision),
+            "TOTAL": formatCurrency(row.total),
+            "ASESOR": row.asesor,
+            "GDS": row.gds,
+            "PASAJERO": row.pasajero
+        }));
+
+        // Crear un nuevo workbook
+        const workbook = XLSX.utils.book_new();
+        const worksheet = XLSX.utils.json_to_sheet(exportData);
+
+        // Ajustar ancho de columnas
+        const columnWidths = [
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 15 },
+            { wch: 18 },
+            { wch: 15 },
+            { wch: 15 },
+            { wch: 10 },
+            { wch: 25 }
+        ];
+        worksheet["!cols"] = columnWidths;
+
+        // Agregar la hoja al workbook
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Pendientes");
+
+        // Descargar el archivo
+        XLSX.writeFile(workbook, `Pendientes_${new Date().toLocaleDateString("es-ES")}.xlsx`);
+    };
+
     return (
         <div className="pending-invoices">
-            <h3>Datos Pendientes por Facturar ({data.length})</h3>
+            <div className="header-container">
+                <h3>Tkts Pendientes por Facturar ({data.length})</h3>
+                <button 
+                    className="export-btn"
+                    onClick={exportToExcel}
+                    title="Exportar a Excel"
+                >
+                    <span>📊</span> Exportar Excel
+                </button>
+            </div>
             <div className="pending-table">
                 <div className="table-header">
                     <div className="col col-mes">MES</div>
